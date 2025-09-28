@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 name: Amazon Price Tracker Bot
 
 on:
@@ -27,3 +28,39 @@ jobs:
           ALERT_PASSWORD: ${{ secrets.ALERT_PASSWORD }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+=======
+name: Amazon Price Tracker
+
+on:
+  schedule:
+    # Run every 1 hour
+    - cron: '0 * * * *'
+  workflow_dispatch: # allows manual run from GitHub
+
+jobs:
+  run-tracker:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Amazon Price Tracker
+      env:
+        EMAIL_ID: ${{ secrets.EMAIL_ID }}
+        EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      run: |
+        python tracker.py
+>>>>>>> 229ee72172f78e6ba8adc1308c0916417d669264
